@@ -53,12 +53,8 @@ def build_message(cid):
     attribute = '\n'.join(f"{k} {attribute[k]}" for k in attribute if attribute[k])
     text = f"{m.name}[ㅤ]({m.poster})[DMM链接]({m.url})\n\n{attribute}"
     javlib_url = f"https://www.javlibrary.com/cn/vl_searchbyid.php?keyword={keyword}"
-    markup = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton('预览', url=m.preview),
-                        InlineKeyboardButton('JAVLibrary', url=javlib_url)
-                    ]
-                ]
-            )
+    buttons = [InlineKeyboardButton('JAVLibrary', url=javlib_url)]
+    if m.preview:
+        buttons.insert(0, InlineKeyboardButton('预览', url=m.preview))
+    markup = InlineKeyboardMarkup([buttons])
     return {'text': text, 'markup': markup}
