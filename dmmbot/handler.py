@@ -7,7 +7,7 @@ from pyrogram import enums
 async def inline_handler(inline_query):
     query = inline_query.query
     answer = build_inline_answer(query)
-    await inline_query.answer(answer)
+    await inline_query.answer(answer, cache_time=0)
 
 async def inline_result_handler(result, bot):
     cid = result.result_id
