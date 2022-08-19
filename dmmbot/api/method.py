@@ -5,7 +5,7 @@ import random
 
 from .. import CONFIG
 
-URL_BASE = 'https://api.dmm.com/affiliate/v3/ItemList?api_id=ezuc1BvgM0f74KV4ZMmS&affiliate_id=sakuradite-999&site=FANZA&service=digital&floor=videoa'
+URL_BASE = 'https://api.dmm.com/affiliate/v3/ItemList'
 
 PARAMS_BASE = {
         'api_id': CONFIG['DMM']['api_id'],
