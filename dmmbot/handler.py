@@ -1,8 +1,4 @@
-import re
-
 from .util import build_inline_answer, build_message
-
-from pyrogram import enums
 
 async def inline_handler(inline_query):
     query = inline_query.query
