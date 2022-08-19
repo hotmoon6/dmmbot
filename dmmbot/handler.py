@@ -1,6 +1,6 @@
 import re
 
-from .util import build_inline_answer, build_message, Inline_search_markup
+from .util import build_inline_answer, build_message
 
 from pyrogram import enums
 
@@ -20,7 +20,3 @@ async def callback_handler(callback):
     msg = build_message(cid)
     await callback.edit_message_text(msg['text'], reply_markup=msg['markup'])
 
-async def start_handler(message, bot):
-    me = await bot.get_me()
-    if message.chat.type == enums.ChatType.PRIVATE or re.search(me.username, message.text):
-        await message.reply_text("FANZA（原DMM.R18）影片检索", reply_markup=Inline_search_markup)
