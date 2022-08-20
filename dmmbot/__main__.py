@@ -1,3 +1,5 @@
+import re
+
 from .client import client
 from .util import Inline_search_markup
 from .handler import inline_handler, inline_result_handler, callback_handler

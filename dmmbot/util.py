@@ -22,7 +22,7 @@ def build_inline_answer(query):
     answer = []
     for i in results[:10]:
         title = f"{i['title']}"
-        if re.match('【VR】', 'title'):
+        if re.match('【VR】', i['title']):
             continue
         description = ' '.join(a['name'] for a in i['iteminfo'].get('actress', []))
         data = i['content_id']
@@ -44,14 +44,14 @@ def build_message(cid):
     attribute = {
             '演员    ': ' '.join(f"#{i}" for i in m.actress),
             '系列    ': next(iter(m.series), None),
-            '片长    ': m.runtime,
+            '片长    ': f"{m.runtime} 分钟",
             '日期    ': m.date,
             '制作商': ' '.join(f"#{clean(i)}" for i in m.maker),
             '发行商': ' '.join(f"#{clean(i)}" for i in m.label),
             '类别    ': ' '.join(i for i in m.genres)
             }
     attribute = '\n'.join(f"{k} {attribute[k]}" for k in attribute if attribute[k])
-    text = f"{m.name}[ㅤ]({m.poster})[DMM链接]({m.url})\n\n{attribute}"
+    text = f"{m.name}[ㅤ]({m.poster}) [DMM链接]({m.url})\n\n{attribute}"
     javlib_url = f"https://www.javlibrary.com/cn/vl_searchbyid.php?keyword={keyword}"
     buttons = [InlineKeyboardButton('JAVLibrary', url=javlib_url)]
     if m.preview:
