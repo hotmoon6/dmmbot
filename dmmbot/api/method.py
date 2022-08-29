@@ -19,11 +19,11 @@ PARAMS_BASE = {
 
 def get_preview(cid):
     r = requests.get(f"https://www.dmm.co.jp/service/digitalapi/-/html5_player/=/cid={cid}/mtype=CARdWwNE/")
-    s = re.search('{"bitrate":3000.+mp4"}', r.text)
+    s = re.search('"bitrates":(\[{.+}\])', r.text)
     if not s:
         return None
-    s = s.group(0)
-    url = f"https:{json.loads(s)['src']}"
+    s = s.group(1)
+    url = f"https:{json.loads(s)[-1]['src']}"
     return url
 
 def search(keyword):
