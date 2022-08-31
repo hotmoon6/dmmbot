@@ -1,12 +1,10 @@
 import re
 
-from .client import client
+from . import bot
 from .util import Inline_search_markup
 from .handler import inline_handler, inline_result_handler, callback_handler
 
 from pyrogram import filters, enums
-
-bot = client()
 
 async def group_filter(_, __, message):
     me = await bot.get_me()
