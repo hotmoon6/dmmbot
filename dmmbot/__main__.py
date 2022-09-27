@@ -2,7 +2,7 @@ import re
 
 from . import bot
 from .util import Inline_search_markup
-from .handler import inline_handler, inline_result_handler, callback_handler
+from .handler import inline_handler, inline_result_handler, callback_handler, video_id_handler
 
 from pyrogram import filters, enums
 
@@ -27,5 +27,9 @@ async def edit_inline_result(client, result):
 @bot.on_callback_query()
 async def force_edit_inline_result(client, callback):
     await callback_handler(callback)
+
+@bot.on_message(filters.regex('^\w+-\d+$'))
+async def reply_video_id(clinet, message):
+    await video_id_handler(message)
 
 bot.run()
