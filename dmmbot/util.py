@@ -1,32 +1,28 @@
 import re
-
-from .api import method
-from .api.type import Movie
+import requests
 
 from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
         InlineQueryResultArticle, InputTextMessageContent)
 
 Inline_search_markup = InlineKeyboardMarkup([[InlineKeyboardButton('点击此处开始搜索', switch_inline_query_current_chat='')]])
 
-def clean(text):
-    return re.sub('\W', '_', text)
+API = 'http://127.0.0.1:3662/api/'
 
 def build_inline_answer(query):
     if not query:
-        results = method.random_results()
-    elif re.match(r'\w+-\d+', query):
-        keyword = re.sub('-', '00', re.search(r'\w+-\d+', query).group())
-        results = method.search(keyword)
-    else:
-        results = method.search(query)
+        return
+    
     answer = []
+
+    results = requests.get(f"{API}query?keyword={query}").json()
     for i in results[:10]:
-        title = f"{i['title']}"
-        if re.match('【VR】', i['title']):
-            continue
-        description = ' '.join(a['name'] for a in i['iteminfo'].get('actress', []))
-        data = i['content_id']
-        img = i['imageURL']['large']
+        info = requests.get(f"{API}query?cid={i}").json()
+        keyword = re.search(r'[a-z]+\d+', i).group()
+        pid = re.sub("00", "-", keyword).upper()
+        title = f"{pid} {info['name']}"
+        description = ' '.join(info['actress'])
+        data = info['cid']
+        img = info['poster']
         markup = InlineKeyboardMarkup(
                 [
                     [
@@ -39,22 +35,27 @@ def build_inline_answer(query):
     return answer
 
 def build_message(cid):
-    m = Movie(cid)
-    keyword = re.search(r'[a-zA-Z]+\d+', cid).group()
+    info = requests.get(f"{API}query?cid={cid}").json()
+    keyword = re.search(r'[a-z]+\d+', cid).group()
+    pid = re.sub("00", "-", keyword).upper()
     attribute = {
-            '演员    ': ' '.join(f"#{i}" for i in m.actress),
-            '系列    ': next(iter(m.series), None),
-            '片长    ': f"{m.runtime} 分钟",
-            '日期    ': m.date,
-            '制作商': ' '.join(f"#{clean(i)}" for i in m.maker),
-            '发行商': ' '.join(f"#{clean(i)}" for i in m.label),
-            '类别    ': ' '.join(i for i in m.genres)
+            '演员    ': ' '.join(f"#{i}" for i in info['actress']),
+            '系列    ': info['series'],
+            '片长    ': f"{info['runtime']} 分钟",
+            '日期    ': info['date'],
+            '制作商': info['maker'],
+            '发行商': info['label'],
+            '类别    ': ' '.join(info['genre'])
             }
     attribute = '\n'.join(f"{k} {attribute[k]}" for k in attribute if attribute[k])
-    text = f"{m.name}[ㅤ]({m.poster}) [DMM链接]({m.url})\n\n{attribute}"
+    text = f"{pid} {info['name']}[ㅤ]({info['poster']})\n\n{attribute}"
     javlib_url = f"https://www.javlibrary.com/cn/vl_searchbyid.php?keyword={keyword}"
     buttons = [InlineKeyboardButton('JAVLibrary', url=javlib_url)]
-    if m.preview:
-        buttons.insert(0, InlineKeyboardButton('预览', url=m.preview))
+    preview = requests.head(f"{API}preview?cid={cid}").headers.get('Location')
+    if preview:
+        buttons.insert(0, InlineKeyboardButton('预览', url=preview))
     markup = InlineKeyboardMarkup([buttons])
     return {'text': text, 'markup': markup}
+
+def getcid(pid):
+    return requests.get(f"{API}getcid?pid={pid}").text

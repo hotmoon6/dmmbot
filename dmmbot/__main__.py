@@ -28,7 +28,7 @@ async def edit_inline_result(client, result):
 async def force_edit_inline_result(client, callback):
     await callback_handler(callback)
 
-@bot.on_message(filters.regex('^[a-zA-Z]+-\d+$'))
+@bot.on_message(filters.regex('^[a-zA-Z][a-zA-Z]+-\d+$'))
 async def reply_video_id(clinet, message):
     await video_id_handler(message)
 

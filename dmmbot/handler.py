@@ -1,13 +1,14 @@
 import re
 
-from .util import build_inline_answer, build_message
+from .util import build_inline_answer, build_message, getcid
 
 from pyrogram import enums
 
 async def inline_handler(inline_query):
     query = inline_query.query
     answer = build_inline_answer(query)
-    await inline_query.answer(answer, cache_time=0)
+    if answer:
+        await inline_query.answer(answer, cache_time=0)
 
 async def inline_result_handler(result, bot):
     cid = result.result_id
@@ -22,10 +23,10 @@ async def callback_handler(callback):
 
 async def video_id_handler(message):
     await message.reply_chat_action(enums.ChatAction.UPLOAD_PHOTO)
-    cid = re.sub('-', '00', re.search(r'\w+-\d+', message.text).group())
-    try:
-        msg = build_message(cid.lower())
-    except:
+    cid = getcid(message.text)
+    if cid:
+        msg = build_message(cid)
+    else:
         await message.reply_text("🈚️")
         return None
     await message.reply_text(msg['text'], reply_markup=msg['markup'])
