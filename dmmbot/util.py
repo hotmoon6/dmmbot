@@ -10,11 +10,11 @@ API = 'http://127.0.0.1:3662/api/'
 
 def build_inline_answer(query):
     if not query:
-        return
-    
-    answer = []
+        results = requests.get(f"{API}top").json()
+    else:
+        results = requests.get(f"{API}query?keyword={query}").json()
 
-    results = requests.get(f"{API}query?keyword={query}").json()
+    answer = []
     for i in results[:10]:
         info = requests.get(f"{API}query?cid={i}").json()
         keyword = re.search(r'[a-z]+\d+', i).group()
