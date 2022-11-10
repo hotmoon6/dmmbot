@@ -16,13 +16,11 @@ def build_inline_answer(query):
 
     answer = []
     for i in results[:10]:
-        info = requests.get(f"{API}query?cid={i}").json()
-        keyword = re.search(r'[a-z]+\d+', i).group()
+        keyword = re.search(r'[a-z]+\d+', i['cid']).group()
         pid = re.sub("00", "-", keyword).upper()
-        title = f"{pid} {info['name']}"
-        description = ' '.join(info['actress'])
-        data = info['cid']
-        img = info['poster']
+        title = f"{pid} {i['name']}"
+        data = i['cid']
+        img = i['poster']
         markup = InlineKeyboardMarkup(
                 [
                     [
@@ -30,8 +28,7 @@ def build_inline_answer(query):
                     ]
                 ]
             )
-        answer.append(InlineQueryResultArticle(title=title, description=description,
-            input_message_content=InputTextMessageContent(title), reply_markup=markup, thumb_url=img, id=data))
+        answer.append(InlineQueryResultArticle(title=title, input_message_content=InputTextMessageContent(title), reply_markup=markup, thumb_url=img, id=data))
     return answer
 
 def build_message(cid):
