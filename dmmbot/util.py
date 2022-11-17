@@ -45,7 +45,7 @@ def build_message(cid):
             '类别    ': ' '.join(info['genre'])
             }
     attribute = '\n'.join(f"{k} {attribute[k]}" for k in attribute if attribute[k])
-    text = f"{pid} {info['name']}[ㅤ]({info['poster']})\n\n{attribute}"
+    text = f"{pid} {info['name']}[\u200b]({info['poster']})\n\n{attribute}"
     javlib_url = f"https://www.javlibrary.com/cn/vl_searchbyid.php?keyword={keyword}"
     buttons = [InlineKeyboardButton('JAVLibrary', url=javlib_url)]
     preview = requests.head(f"{API}preview?cid={cid}").headers.get('Location')
