@@ -55,4 +55,6 @@ def build_message(cid):
     return {'text': text, 'markup': markup}
 
 def getcid(pid):
-    return requests.get(f"{API}getcid?pid={pid}").text
+    res = requests.get(f"{API}getcid?pid={pid}")
+    if res.ok:
+        return res.text
