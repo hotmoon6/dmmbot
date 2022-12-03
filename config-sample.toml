@@ -1,8 +1,8 @@
 [telegram]
-name = "bot"
-api_id = 11111
-api_hash = "123abc"
-bot_token = "1111:AAA"
+name = "vidcomnewbot"
+api_id = 12581928
+api_hash = "9bd003806267466f904f91aa035d8991"
+bot_token = "5119993273:AAGlfbhvFHOc7xiZkb12P6QVT6rA75JwURc"
 
 [DMM]
 api_id = "xxx"
