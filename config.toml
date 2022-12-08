@@ -1,8 +1,8 @@
 [telegram]
-name = "vidcomnewbot"
+name = "dmmsearchbot"
 api_id = 12581928
 api_hash = "9bd003806267466f904f91aa035d8991"
-bot_token = "5119993273:AAGlfbhvFHOc7xiZkb12P6QVT6rA75JwURc"
+bot_token = "5825162076:AAGGJpR0wFI00ZblAQHhzM0LKBMtOug4ddk"
 
 [DMM]
 api_id = "bYga4ba5HUvnZzsvH30U"
