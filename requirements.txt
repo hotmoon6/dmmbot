@@ -1,3 +1,4 @@
 requests
 pyrogram
 tomli
+tgcrypto
