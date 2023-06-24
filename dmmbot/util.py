@@ -6,7 +6,8 @@ from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
 
 Inline_search_markup = InlineKeyboardMarkup([[InlineKeyboardButton('点击此处开始搜索', switch_inline_query_current_chat='')]])
 
-API = 'http://127.0.0.1:3662/api/'
+API = 'http://0.0.0.0:3662/api/'    
+# http://127.0.0.1:3662/api/
 
 def build_inline_answer(query):
     if not query:
