@@ -6,7 +6,7 @@ from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
 
 Inline_search_markup = InlineKeyboardMarkup([[InlineKeyboardButton('点击此处开始搜索', switch_inline_query_current_chat='')]])
 
-API = 'http://127.0.0.1:3662/api/'    
+API = 'https://api.dmm.com/affiliate/'    
 # http://127.0.0.1:3662/api/
 
 def build_inline_answer(query):
