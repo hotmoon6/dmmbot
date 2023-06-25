@@ -1,9 +1,9 @@
 [telegram]
-name = "dmmsearchbot"
-api_id = 12581928
-api_hash = "9bd003806267466f904f91aa035d8991"
-bot_token = "5825162076:AAGVlR9eRx9uYHh3FwCPH3CKcsSl-dOGCPA"
+name = ""
+api_id = 
+api_hash = ""
+bot_token = ""
 
 [DMM]
-api_id = "bYga4ba5HUvnZzsvH30U"
-affiliate_id = "dmmidofbot-990"
+api_id = ""
+affiliate_id = ""
